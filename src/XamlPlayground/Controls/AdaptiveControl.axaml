@@ -1,0 +1,132 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:XamlPlayground.Controls">
+  <Design.PreviewWith>
+    <c:AdaptiveControl Width="900" Height="500">
+      <c:AdaptiveControl.Header>
+        <Rectangle Fill="Red" />
+      </c:AdaptiveControl.Header>
+      <c:AdaptiveControl.Left>
+        <Rectangle Fill="Green" />
+      </c:AdaptiveControl.Left>
+      <c:AdaptiveControl.Right>
+        <Rectangle Fill="Blue" />
+      </c:AdaptiveControl.Right>
+    </c:AdaptiveControl>
+  </Design.PreviewWith>
+  <Styles.Resources>
+    <x:Double x:Key="WidthTrigger">900</x:Double>
+  </Styles.Resources>
+  <Style Selector="c|AdaptiveControl">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <DockPanel Name="PART_DockPanel">
+          <ContentPresenter Name="PART_HeaderContentPresenter"
+                            Content="{TemplateBinding Header}" 
+                            DockPanel.Dock="Top" /> 
+          <Grid ColumnDefinitions="50*,Auto,50*" RowDefinitions="*,Auto,*">
+            <ContentPresenter Name="PART_LeftContentPresenter"
+                              Content="{TemplateBinding Left}">
+              <ContentPresenter.Styles>
+                <Style Selector="ContentPresenter.horizontal">
+                  <Setter Property="(Grid.Column)" Value="0" />
+                  <Setter Property="(Grid.Row)" Value="0" />
+                  <Setter Property="(Grid.RowSpan)" Value="3" />
+                </Style>
+                <Style Selector="ContentPresenter.vertical">
+                  <Setter Property="(Grid.Column)" Value="0" />
+                  <Setter Property="(Grid.ColumnSpan)" Value="3" />
+                  <Setter Property="(Grid.Row)" Value="0" />
+                </Style>
+              </ContentPresenter.Styles>
+              <Interaction.Behaviors>
+                <AdaptiveBehavior SourceControl="{Binding #PART_DockPanel}">
+                  <AdaptiveClassSetter MinWidth="0" MaxWidth="{DynamicResource WidthTrigger}" ClassName="vertical" />
+                  <AdaptiveClassSetter MinWidth="{DynamicResource WidthTrigger}" MaxWidth="Infinity" ClassName="horizontal" />
+                </AdaptiveBehavior>
+              </Interaction.Behaviors>
+            </ContentPresenter>
+            <GridSplitter Name="PART_GridSplitter">
+              <GridSplitter.Styles>
+                <Style Selector="GridSplitter.horizontal">
+                  <Setter Property="ResizeBehavior" Value="PreviousAndNext" />
+                  <Setter Property="ResizeDirection" Value="Columns" />
+                  <Setter Property="Width" Value="6" />
+                  <Setter Property="(Grid.Column)" Value="1" />
+                  <Setter Property="(Grid.Row)" Value="0" />
+                  <Setter Property="(Grid.RowSpan)" Value="3" />
+                  <Setter Property="Template">
+                    <Setter.Value>
+                      <ControlTemplate>
+                        <Border Background="Transparent">
+                          <Separator Background="{DynamicResource SystemChromeAltLowColor}" 
+                                     Margin="0,0,0,0"
+                                     Opacity="0.3" 
+                                     Width="0.55"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"/>
+                        </Border>
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+                <Style Selector="GridSplitter.vertical">
+                  <Setter Property="ResizeBehavior" Value="PreviousAndNext" />
+                  <Setter Property="ResizeDirection" Value="Rows" />
+                  <Setter Property="Height" Value="6" />
+                  <Setter Property="(Grid.Column)" Value="0" />
+                  <Setter Property="(Grid.ColumnSpan)" Value="3" />
+                  <Setter Property="(Grid.Row)" Value="1" />
+                  <Setter Property="Template">
+                    <Setter.Value>
+                      <ControlTemplate>
+                        <Border Background="Transparent">
+                          <Separator Background="{DynamicResource SystemChromeAltLowColor}" 
+                                     Margin="0,0,0,0"
+                                     Opacity="0.3" 
+                                     Height="0.55"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"/>
+                        </Border>
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+              </GridSplitter.Styles>
+              <Interaction.Behaviors>
+                <AdaptiveBehavior SourceControl="{Binding #PART_DockPanel}">
+                  <AdaptiveClassSetter MinWidth="0" MaxWidth="{DynamicResource WidthTrigger}" ClassName="vertical" />
+                  <AdaptiveClassSetter MinWidth="{DynamicResource WidthTrigger}" MaxWidth="Infinity" ClassName="horizontal" />
+                </AdaptiveBehavior>
+              </Interaction.Behaviors>
+            </GridSplitter>
+            <ContentPresenter Name="PART_RightContentPresenter"
+                              Content="{TemplateBinding Right}">
+              <ContentPresenter.Styles>
+                <Style Selector="ContentPresenter.horizontal">
+                  <Setter Property="(Grid.Column)" Value="2" />
+                  <Setter Property="(Grid.Row)" Value="0" />
+                  <Setter Property="(Grid.RowSpan)" Value="3" />
+                </Style>
+                <Style Selector="ContentPresenter.vertical">
+                  <Setter Property="(Grid.Column)" Value="0" />
+                  <Setter Property="(Grid.ColumnSpan)" Value="3" />
+                  <Setter Property="(Grid.Row)" Value="2" />
+                </Style>
+              </ContentPresenter.Styles>
+              <Interaction.Behaviors>
+                <AdaptiveBehavior SourceControl="{Binding #PART_DockPanel}">
+                  <AdaptiveClassSetter MinWidth="0" MaxWidth="{DynamicResource WidthTrigger}" ClassName="vertical" />
+                  <AdaptiveClassSetter MinWidth="{DynamicResource WidthTrigger}" MaxWidth="Infinity" ClassName="horizontal" />
+                </AdaptiveBehavior>
+              </Interaction.Behaviors>
+            </ContentPresenter>
+          </Grid>
+        </DockPanel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="c|AdaptiveControl /template/ GridSplitter#PART_GridSplitter">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+</Styles>

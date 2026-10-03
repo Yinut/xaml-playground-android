@@ -1,0 +1,37 @@
+@inject NavigationManager NavigationManager
+@page "/"
+@page "/{Id}"
+@using Avalonia
+@using Avalonia.Controls.ApplicationLifetimes
+@using XamlPlayground.Services
+@using XamlPlayground.ViewModels
+@using XamlPlayground.Views
+
+<AvaloniaView/>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        CompilerService.BaseUri = NavigationManager.BaseUri;
+
+        Console.WriteLine($"Uri: {NavigationManager.Uri}");
+        Console.WriteLine($"BaseUri: {NavigationManager.BaseUri}");
+
+        if (Id is { } && !string.IsNullOrEmpty(Id))
+        {
+            if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime single)
+            {
+                if (single.MainView is MainView mainView)
+                {
+                    if (mainView.DataContext is MainViewModel vm)
+                    {
+                        await vm.Gist(Id);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:XamlPlayground.ViewModels"
+             xmlns:c="using:XamlPlayground.Controls"
+             xmlns:views="using:XamlPlayground.Views"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="450"
+             x:Class="XamlPlayground.Views.MainView"
+             x:CompileBindings="True" x:DataType="vm:MainViewModel"
+             FontFamily="fonts:Inter#Inter">
+  <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style Selector="Button TextBlock">
+      <Setter Property="FontSize" Value="20" />
+    </Style>
+  </UserControl.Styles>
+
+  <c:AdaptiveControl>
+    <c:AdaptiveControl.Header>
+      <views:HeaderView />
+    </c:AdaptiveControl.Header>
+    <c:AdaptiveControl.Left>
+      <views:CodeView />
+    </c:AdaptiveControl.Left>
+    <c:AdaptiveControl.Right>
+      <views:PreviewView />
+    </c:AdaptiveControl.Right>
+  </c:AdaptiveControl>
+</UserControl>

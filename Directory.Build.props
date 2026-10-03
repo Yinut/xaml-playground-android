@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AvaloniaVersion>11.3.8</AvaloniaVersion>
+    <AvaloniaBehaviorsVersion>11.3.8.2</AvaloniaBehaviorsVersion>
+    <AvaloniaEditVersion>11.3.0</AvaloniaEditVersion>
+    <OctokitVersion>14.0.0</OctokitVersion>
+    <CommunityToolkitMvvmVersion>8.4.0</CommunityToolkitMvvmVersion>
+    <MicrosoftCodeAnalysisVersion>4.14.0</MicrosoftCodeAnalysisVersion>
+  </PropertyGroup>
+</Project>

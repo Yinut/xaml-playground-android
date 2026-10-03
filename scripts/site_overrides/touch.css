@@ -1,0 +1,34 @@
+/* ===== 手机/触屏适配 ===== */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    /* 禁止浏览器自带的下拉刷新 / 橡皮筋回弹，避免与 Avalonia 滚动冲突 */
+    overscroll-behavior: none;
+    /* 禁止浏览器自带的滚动与缩放手势（Avalonia 通过 pointer 事件自己处理） */
+    touch-action: none;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* 固定到布局视口：软键盘弹出（adjustResize）时随之缩小，Avalonia 才能把界面排到键盘上方 */
+#out {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.avalonia-container {
+    touch-action: none;
+    outline: none;
+}
+
+/* 隐藏的输入框：保持可聚焦以便弹出软键盘，但不要遮挡内容 */
+.avalonia-input-element {
+    opacity: 0;
+    pointer-events: none;
+}

@@ -1,0 +1,82 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:XamlPlayground.ViewModels"
+             xmlns:ae="using:AvaloniaEdit"
+             xmlns:behaviors="using:XamlPlayground.Behaviors"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450"
+             x:Class="XamlPlayground.Views.CodeView"
+             x:CompileBindings="True" x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <vm:MainViewModel />
+  </Design.DataContext>
+  
+  <UserControl.Styles>
+    <Style Selector="TabControl.code TabItem">
+      <Setter Property="MinHeight" Value="32" />
+      <Setter Property="Margin" Value="12,2,2,2" />
+      <Setter Property="Padding" Value="8" />
+      <Setter Property="(TextBlock.FontSize)" Value="16" />
+    </Style>
+    <Style Selector="TabControl.code TabItem /template/ Border#PART_LayoutRoot">
+      <Setter Property="Margin" Value="0 0 0 0" />
+    </Style>
+    <Style Selector="TabControl.code">
+      <Setter Property="Padding" Value="0" />
+    </Style>
+  </UserControl.Styles>
+  
+  <DockPanel>
+    <Label Content="{Binding LastErrorMessage}" 
+           IsVisible="{Binding !!LastErrorMessage}"
+           Background="Red"
+           Foreground="White"
+           Classes="text"
+           DockPanel.Dock="Bottom" />
+    
+    <TabControl TabStripPlacement="Bottom" Classes="code" BorderBrush="#283e74" BorderThickness="0,0,1,0">
+      <TabControl.Styles>
+        <Style Selector="TabControl">
+          <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="TabItem">
+          <Setter Property="Padding" Value="6"/>
+          <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}" />
+        </Style>
+      </TabControl.Styles>
+      <TabItem Header="Xaml">
+        <ae:TextEditor Margin="0"
+                       IsReadOnly="{OnFormFactor False, Mobile=True}"
+                       Document="{Binding CurrentSample.Xaml}"
+                       HorizontalScrollBarVisibility="Auto"
+                       VerticalScrollBarVisibility="Auto"
+                       FontFamily="avares://XamlPlayground/Assets/Fonts#Roboto Mono"
+                       ShowLineNumbers="True"
+                       FontWeight="Normal"
+                       FontSize="{Binding EditorFontSize}"
+                       WordWrap="False">
+          <Interaction.Behaviors>
+            <behaviors:TextEditorBehavior Extension=".xml" />
+          </Interaction.Behaviors>
+        </ae:TextEditor>
+      </TabItem>
+      <TabItem Header="Code">
+        <ae:TextEditor Margin="0"
+                       IsReadOnly="{OnFormFactor False, Mobile=True}"
+                       Document="{Binding CurrentSample.Code}"
+                       HorizontalScrollBarVisibility="Auto"
+                       VerticalScrollBarVisibility="Auto"
+                       FontFamily="avares://XamlPlayground/Assets/Fonts#Roboto Mono"
+                       ShowLineNumbers="True"
+                       FontWeight="Normal"
+                       FontSize="{Binding EditorFontSize}"
+                       WordWrap="False">
+          <Interaction.Behaviors>
+            <behaviors:TextEditorBehavior Extension=".cs" />
+          </Interaction.Behaviors>
+        </ae:TextEditor>
+      </TabItem>
+    </TabControl>
+  </DockPanel>
+</UserControl>

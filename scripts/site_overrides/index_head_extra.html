@@ -1,0 +1,51 @@
+    <meta name="theme-color" content="#1b2a4e">
+    <link rel="stylesheet" href="./app.css" />
+    <script>
+        /* 最小逻辑宽度：HeaderView 的左右按钮（Gist/Settings）需要 >=512px
+           （英文文案只要 477px，汉化后 title/File/Run 变宽约 31px），
+           小屏上把布局视口强制到 >=520，由浏览器等比缩放显示。
+           优先用 viewport meta；若浏览器忽略了动态 meta，则用 CSS transform 兜底。 */
+        (function () {
+            var MIN = 520;
+            function upgradeViewportMeta() {
+                if (window.innerWidth >= MIN) return;
+                var m = document.querySelector('meta[name="viewport"]');
+                if (!m) return;
+                var n = m.cloneNode(false);
+                n.content = 'width=' + MIN + ', initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover';
+                m.parentNode.replaceChild(n, m);
+            }
+            function applyFallbackScale() {
+                var out = document.getElementById('out');
+                if (!out) return;
+                var w = window.innerWidth, h = window.innerHeight;
+                if (!w || !h) return;
+                if (w >= MIN) {
+                    if (out.style.width) { out.style.width = ''; out.style.height = ''; out.style.transform = ''; }
+                    return;
+                }
+                var k = w / MIN;
+                out.style.position = 'fixed';
+                out.style.left = '0';
+                out.style.top = '0';
+                out.style.right = 'auto';
+                out.style.bottom = 'auto';
+                out.style.width = MIN + 'px';
+                out.style.height = Math.round(h / k) + 'px';
+                out.style.transformOrigin = '0 0';
+                out.style.transform = 'scale(' + k + ')';
+            }
+            function run() { upgradeViewportMeta(); applyFallbackScale(); }
+            upgradeViewportMeta();
+            document.addEventListener('DOMContentLoaded', run);
+            window.addEventListener('load', function () { setTimeout(run, 0); });
+            window.addEventListener('resize', run);
+            window.addEventListener('orientationchange', function () { setTimeout(run, 50); });
+        })();
+        /* 关闭浏览器手势（双指缩放/双击缩放/长按菜单），交给 Avalonia 自己处理 */
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (t) {
+            document.addEventListener(t, function (e) { e.preventDefault(); }, { passive: false });
+        });
+        document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+        document.addEventListener('dblclick', function (e) { e.preventDefault(); });
+    </script>
